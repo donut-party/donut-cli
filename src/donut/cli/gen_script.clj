@@ -1,5 +1,6 @@
 (ns donut.cli.gen-script
   (:require
+   [babashka.fs :as fs]
    [clojure.edn :as edn]
    [clojure.string :as str]))
 
@@ -20,4 +21,5 @@
   (let [prelude (slurp "prelude")
         new     (slurp "src/donut/cli/new.clj")
         donut   (slurp "src/donut/donut.clj")]
-    (spit "donut" (str/join "\n" [prelude new donut]))))
+    (spit "donut" (str/join "\n" [prelude meta-str new donut]))
+    (fs/set-posix-file-permissions "donut" "rwxr-xr-x")))
