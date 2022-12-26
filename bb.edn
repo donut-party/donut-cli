@@ -12,4 +12,19 @@
                                        [major minor patch] (str/split version (re-pattern "\\."))
                                        version             (str/join "." [major minor (inc (Integer/parseInt patch))])]
                                    (binding [*command-line-args* ["version" "set" version "--no-tag"]]
-                                     (neil/-main)))}}}
+                                     (neil/-main)))}
+
+         publish {:requires ([clojure.edn :as edn])
+                  :doc      "Bumps version, pushes tag"
+                  :task
+                  (do
+                    (run 'bump-version)
+                    ;; (run 'tests)
+                    ;; (run 'update-readme)
+                    (shell "git add .")
+                    (let [version (-> (slurp "deps.edn") edn/read-string
+                                      :aliases :neil :project :version)]
+                      (shell (format "git commit -m 'Bump version %s'" version))
+                      (shell (str "git tag v" version))
+                      (shell "git push --atomic origin main"
+                             (str "v" version))))}}}
