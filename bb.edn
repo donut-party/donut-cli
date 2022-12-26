@@ -14,7 +14,8 @@
                                    (binding [*command-line-args* ["version" "set" version "--no-tag"]]
                                      (neil/-main)))}
 
-         publish {:requires ([clojure.edn :as edn])
+         publish {:depends  [gen-script]
+                  :requires ([clojure.edn :as edn])
                   :doc      "Bumps version, pushes tag"
                   :task
                   (do
