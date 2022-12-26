@@ -1,1 +1,4 @@
-{:deps {party.donut/donut-cli {:local/root "."}}}
+{:deps  {party.donut/donut-cli {:local/root "."}}
+ :tasks {gen-script {:doc      "Build the donut script"
+                     :requires ([donut.cli.gen-script :as gen-script])
+                     :task     (gen-script/gen-script)}}}

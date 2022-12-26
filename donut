@@ -1,0 +1,49 @@
+#!/usr/bin/env bb
+;; -*- mode: clojure -*-
+
+;; DO NOT EDIT DIRECTLY. GENERATED FROM scr/babashka/neil.clj
+
+(require '[babashka.deps :as deps])
+
+(deps/add-deps '{:deps {org.babashka/spec.alpha {:git/url "https://github.com/babashka/spec.alpha"
+                                                 :git/sha "1a841c4cc1d4f6dab7505a98ed2d532dd9d56b78"}
+                        io.github.seancorfield/deps-new {:git/tag "v0.4.13" :git/sha "879c4eb"}
+                        org.babashka/cli
+                        #_{:local/root "/Users/borkdude/dev/cli"}
+                        {:mvn/version "0.3.33"}}})
+
+(ns donut.cli.new)
+
+(defn- set-classpath
+  "Required by deps.new"
+  []
+  (System/setProperty
+   "java.class.path"
+   ((requiring-resolve 'babashka.classpath/get-classpath))))
+
+(def cli-spec
+  {:target-dir {:alias :t}
+   :override   {:alias :o}})
+
+(def args->opts [:name])
+
+(defn run-deps-new
+  [{:keys [opts]}]
+  (set-classpath)
+  ((requiring-resolve 'org.corfield.new/create)
+   (merge opts
+          {:template 'party.donut/single-page-app})))
+
+(ns donut.donut
+  (:require
+   [babashka.cli :as cli]
+   [donut.cli.new :as new]))
+
+(defn -main
+  [& _args]
+  (cli/dispatch
+   [{:cmds ["new"] :fn new/run-deps-new :spec new/cli-spec :args->opts new/args->opts}]
+   *command-line-args*))
+
+(when (= *file* (System/getProperty "babashka.file"))
+  (-main))
