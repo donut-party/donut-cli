@@ -6,4 +6,4 @@
         party.donut/single-page-app     {:git/url "https://github.com/donut-party/single-page-app-template"
                                          :git/sha "67fdc32be1230ec6f65b4d1f70368a3bd2dcf3c4"}}
  :aliases
- {:neil {:project {:version "0.0.2"}}}}
+ {:neil {:project {:version "0.0.3"}}}}
