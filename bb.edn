@@ -1,4 +1,15 @@
 {:deps  {party.donut/donut-cli {:local/root "."}}
- :tasks {gen-script {:doc      "Build the donut script"
+ :tasks {:requires  ([clojure.string :as str])
+         gen-script {:doc      "Build the donut script"
                      :requires ([donut.cli.gen-script :as gen-script])
-                     :task     (gen-script/gen-script)}}}
+                     :task     (gen-script/gen-script)}
+
+         ;; TODO just shell out to neil for this instead of including the dep
+         bump-version {:requires ([babashka.neil :as neil]
+                                  [clojure.edn :as edn])
+                       :task     (let [version             (-> (slurp "deps.edn") edn/read-string
+                                                               :aliases :neil :project :version)
+                                       [major minor patch] (str/split version (re-pattern "\\."))
+                                       version             (str/join "." [major minor (inc (Integer/parseInt patch))])]
+                                   (binding [*command-line-args* ["version" "set" version "--no-tag"]]
+                                     (neil/-main)))}}}

@@ -1,8 +1,9 @@
 {:deps {io.github.seancorfield/deps-new {:git/tag "v0.4.13" :git/sha "879c4eb"}
         org.babashka/spec.alpha         {:git/url "https://github.com/babashka/spec.alpha"
                                          :git/sha "1a841c4cc1d4f6dab7505a98ed2d532dd9d56b78"}
+        org.babashka/neil               {:git/url "https://github.com/babashka/neil"
+                                         :git/sha "54c023d5a8a2096a9e8daac675166ffce09da7d4"}
         party.donut/single-page-app     {:git/url "https://github.com/donut-party/single-page-app-template"
                                          :git/sha "67fdc32be1230ec6f65b4d1f70368a3bd2dcf3c4"}}
  :aliases
- {:donut
-  {:project {:version "0.0.1"}}}}
+ {:neil {:project {:version "0.0.1"}}}}
