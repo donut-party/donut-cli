@@ -4,6 +4,6 @@
         org.babashka/neil               {:git/url "https://github.com/babashka/neil"
                                          :git/sha "54c023d5a8a2096a9e8daac675166ffce09da7d4"}
         party.donut/single-page-app     {:git/url "https://github.com/donut-party/single-page-app-template"
-                                         :git/sha "67fdc32be1230ec6f65b4d1f70368a3bd2dcf3c4"}}
+                                         :git/sha "cf118314ce7bfcebcc572849f54ffde36369d5f8"}}
  :aliases
  {:neil {:project {:version "0.0.3"}}}}
