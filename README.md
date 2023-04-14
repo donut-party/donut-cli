@@ -19,9 +19,11 @@ The file `donut-cli/prelude` contains all the deps needed by subsequent scripts.
 
 Updating the CLI to use the latest single-page-app-template involves:
 
-1. Get the latest SHA for the repo
+1. Get the latest SHA for [the single-page-app-template
+   repo](https://github.com/donut-party/single-page-app-template)
 2. Update `donut-cli/prelude`
-3. Publish the `donut-cli` tools with `bb publish`. This will create a new tag.
+3. Publish the `donut-cli` tools with `bb publish`. This will create a new tag,
+   and a github action will create a new release download.
 4. [Download latest donut-cli zip release](https://github.com/donut-party/donut-cli/releases)
 5. Run sha256sum v0.0.x.zip to get sum
 6. Update homebrew-brew/Formula/donut.rb with the URL for the new release, and the SHA
