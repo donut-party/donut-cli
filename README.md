@@ -21,6 +21,11 @@ Updating the CLI to use the latest single-page-app-template involves:
 
 1. Get the latest SHA for [the single-page-app-template
    repo](https://github.com/donut-party/single-page-app-template)
+   
+   ```
+   git rev-parse HEAD
+   ```
+
 2. Update `donut-cli/prelude`
 3. Publish the `donut-cli` tools with `bb publish`. This will create a new tag,
    and a github action will create a new release download.
