@@ -5,7 +5,6 @@
 /.clj-kondo/.cache
 /.clj-kondo/babashka
 /.clj-kondo/rewrite-clj
-/.cpcache
 /.lein-*
 /.lsp/.cache
 /.nrepl-port
@@ -17,3 +16,4 @@ pom.xml
 pom.xml.asc
 profiles.clj
 tmp/
+.cpcache
