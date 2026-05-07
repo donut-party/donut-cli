@@ -1,9 +1,6 @@
 {:deps  {party.donut/donut-cli {:local/root "."}}
  :tasks {:requires  ([clojure.string :as str])
-         gen-script {:doc      "Build the donut script"
-                     :requires ([donut.cli.gen-script :as gen-script])
-                     :task     (gen-script/gen-script)}
-
+         
          ;; TODO just shell out to neil for this instead of including the dep
          bump-version {:requires ([babashka.neil :as neil]
                                   [clojure.edn :as edn])
@@ -18,8 +15,7 @@
                                    (binding [*command-line-args* ["version" "set" version "--no-tag"]]
                                      (neil/-main)))}
 
-         publish {:depends  [gen-script]
-                  :requires ([clojure.edn :as edn])
+         publish {:requires ([clojure.edn :as edn])
                   :doc      "Bumps version, pushes tag"
                   :task
                   (do

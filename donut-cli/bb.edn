@@ -1,0 +1,3 @@
+{:paths ["src"]
+ :tasks {new {:task donut.cli.new/-main}}
+ :deps  {io.github.seancorfield/deps-new {:git/tag "v0.4.13" :git/sha "879c4eb"}}}
