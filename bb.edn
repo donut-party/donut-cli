@@ -7,8 +7,12 @@
          ;; TODO just shell out to neil for this instead of including the dep
          bump-version {:requires ([babashka.neil :as neil]
                                   [clojure.edn :as edn])
-                       :task     (let [version             (-> (slurp "deps.edn") edn/read-string
-                                                               :aliases :neil :project :version)
+                       :task     (let [version             (-> (slurp "deps.edn")
+                                                               edn/read-string
+                                                               :aliases
+                                                               :neil
+                                                               :project
+                                                               :version)
                                        [major minor patch] (str/split version (re-pattern "\\."))
                                        version             (str/join "." [major minor (inc (Integer/parseInt patch))])]
                                    (binding [*command-line-args* ["version" "set" version "--no-tag"]]

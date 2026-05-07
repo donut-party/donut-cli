@@ -10,4 +10,4 @@
                         io.github.seancorfield/deps-new {:git/tag "v0.4.13" :git/sha "879c4eb"}
                         org.babashka/cli                {:mvn/version "0.3.33"}
                         party.donut/single-page-app     {:git/url "https://github.com/donut-party/single-page-app-template"
-                                                         :git/sha "1c8eab42dd26676277608dac2d6cc1e1ed42143c"}}})
+                                                         :git/sha "15b4b280a1f185e08f24a0a32542af56ab76d268"}}})
