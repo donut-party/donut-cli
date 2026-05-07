@@ -10,7 +10,7 @@
   (bump-version/-main)
   (ps/shell "git add .")
   (let [proot       (util/project-root)
-        version     (slurp (fs/path proot "donut-cli/VERSION"))
+        version     (slurp (str (fs/path proot "donut-cli/VERSION")))
         tag-name    (str "v" version)]
     (ps/shell (format "git commit -m 'Bump version %s'" version))
     (ps/shell (str "git tag " tag-name))
