@@ -1,4 +1,6 @@
 {:paths ["src"]
- :tasks {new {:doc "create a new Donut single-page app"
+ :tasks {new {:doc  "create a new Donut single-page app"
               :task donut.cli.new/-main}}
- :deps  {io.github.seancorfield/deps-new {:git/tag "v0.4.13" :git/sha "879c4eb"}}}
+ :deps  {io.github.seancorfield/deps-new {:git/tag "v0.4.13" :git/sha "879c4eb"}
+         party.donut/single-page-app     {:git/url "https://github.com/donut-party/single-page-app-template"
+                                          :git/sha "15b4b280a1f185e08f24a0a32542af56ab76d268"}}}
