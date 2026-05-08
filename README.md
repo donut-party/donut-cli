@@ -12,33 +12,27 @@ donut new my-app-name --target-dir dirname --overwrite
 
 ## Development
 
-How it works: the `gen-script` babashka task creates the `donut` file by
-concatenating the component scripts.
+This repo contains both the CLI and tools for developing the CLI.
 
-The file `donut-cli/prelude` contains all the deps needed by subsequent scripts.
+To publish a new release on GitHub:
 
-Updating the CLI to use the latest single-page-app-template involves:
-
-1. Get the latest SHA for [the single-page-app-template
-   repo](https://github.com/donut-party/single-page-app-template)
-   
-   ```
-   git rev-parse HEAD
-   ```
-
-2. Update `donut-cli/prelude`
-3. Publish the `donut-cli` tools with `bb publish`. This will create a new tag,
-   and a github action will create a new release download.
-4. [Download latest donut-cli zip release](https://github.com/donut-party/donut-cli/releases)
-
-``` sh
-wget https://github.com/donut-party/donut-cli/archive/refs/tags/v0.0.X.zip
+``` shell
+./develop/bin/develop publish
 ```
 
-5. Run sha256sum v0.0.x.zip to get sum
+This will:
 
-``` sh
-sha256sum v0.0.X.zip | cut -d " " -f1 | pbcopy
+1. Bump the version number
+2. Update the single-page-app-template dep to the latest SHA on main on GH
+3. Commit and push
+
+From there, a GH workflow creates the release.
+
+The CLI is published to homebrew. To update the homebrew formula:
+
+``` shell
+./develop/bin/develop update-brew
 ```
 
-6. Update homebrew-brew/Formula/donut.rb with the URL for the new release, and the SHA
+This updates the donut.rb file in the homebrew-brew repo to reflect the latest
+release, but it doesn't push the change to GH.
