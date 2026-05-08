@@ -4,4 +4,7 @@
          publish      {:doc  "Bumps version, pushes tag, kicking off release"
                        :task donut.cli.develop.publish/-main}
          update-deps  {:doc  "update the deps for the CLI"
-                       :task donut.cli.develop.update-deps/-main}}}
+                       :task donut.cli.develop.update-deps/-main}
+         update-brew  {:doc  "update brew formula"
+                       :task donut.cli.develop.update-brew/-main}}
+ :deps  {selmer/selmer {:mvn/version "1.12.61"}}}
