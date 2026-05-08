@@ -17,7 +17,7 @@
 (defn -main
   []
   (let [proot       (util/project-root)
-        latest-sha  (str/trim (:out (ps/sh {:dir (fs/path proot "../single-page-app")} "git rev-parse HEAD")))
+        latest-sha  (str/trim (:out (ps/sh "gh api repos/donut-party/single-page-app-template/branches/main --jq '.commit.sha'")))
         bb-edn-path (str (fs/path proot "donut-cli/bb.edn"))]
     (spit bb-edn-path
           (-> bb-edn-path
