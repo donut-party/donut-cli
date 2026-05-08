@@ -8,13 +8,6 @@
    [donut.cli.develop.util :as util]
    [selmer.parser :as selmer]))
 
-;; 1. get the version
-;; 2. wget the release to a temp directory
-;; 3. get the sha256sum
-;; 4. update donut.rb version
-;; 5. update donut.rb sha256
-;; 6. delete the release
-
 (def release-pattern
   "https://github.com/donut-party/donut-cli/archive/refs/tags/v%s.zip")
 

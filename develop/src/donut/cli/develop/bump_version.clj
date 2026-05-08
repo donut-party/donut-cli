@@ -7,7 +7,7 @@
 (defn version-path
   []
   (-> (util/project-root)
-      (fs/path "donut-cli/VERSION")
+      (fs/path "donut-cli/resources/VERSION")
       str))
 
 (defn version
