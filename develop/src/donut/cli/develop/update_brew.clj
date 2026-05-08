@@ -19,9 +19,10 @@
   (let [version     (bump-version/version)
         release-url (format release-pattern version)
         dir         (str (fs/create-temp-dir))
-        _           (ps/shell {:dir dir} "wget" release-url "-O" "release.zip")
+        _           (ps/shell {:dir dir} "wget" release-url "-q" "-O" "release.zip")
         sha256      (first (str/split (:out (ps/sh {:dir dir} "sha256sum release.zip"))
                                       #"\s+"))
         template    (slurp (str (fs/path formula-path "donut.rb.template")))]
     (spit (str (fs/path formula-path "donut.rb"))
-          (selmer/render template {:version version :sha256 sha256}))))
+          (selmer/render template {:version version :sha256 sha256}))
+    (println "still need to commit and push change in homebrew-brew repo")))
