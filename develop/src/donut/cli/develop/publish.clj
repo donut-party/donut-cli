@@ -3,10 +3,12 @@
    [babashka.fs :as fs]
    [babashka.process :as ps]
    [donut.cli.develop.bump-version :as bump-version]
+   [donut.cli.develop.update-deps :as update-deps]
    [donut.cli.develop.util :as util]))
 
 (defn -main
   []
+  (update-deps/-main)
   (bump-version/-main)
   (ps/shell "git add .")
   (let [proot       (util/project-root)
