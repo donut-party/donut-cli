@@ -12,11 +12,10 @@
 (defn info
   [{:keys [event-id point]}]
   (when (= :write-point event-id)
-    (let [action                   (if (:modify point) "updating" "creating")
-          {:keys [namespace path]} (:destination point)]
+    (let [action (if (:modify point) "updating" "creating")]
       (bling/print-bling [:bold.positive action] " "
-                         (or namespace path) " "
-                         [:subtle (:id point)]))))
+                         [:subtle (dg/rendered-point-file-path point)] " "
+                         (:description point)))))
 
 (defn -main
   []
