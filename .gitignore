@@ -7,7 +7,7 @@
 /.clj-kondo/rewrite-clj
 /.lein-*
 /.lsp/.cache
-/.nrepl-port
+.nrepl-port
 /.prepl-port
 /checkouts
 /classes

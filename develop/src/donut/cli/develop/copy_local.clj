@@ -3,7 +3,7 @@
    [babashka.fs :as fs]
    [babashka.process :as ps]
    [clojure.string :as str]
-   [donut.cli.util.project :as proj]))
+   [donut.cli.util.donut-project :as proj]))
 
 (defn brew-path
   []

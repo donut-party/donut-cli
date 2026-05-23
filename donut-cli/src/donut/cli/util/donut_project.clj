@@ -1,13 +1,13 @@
-(ns donut.cli.util.project
+(ns donut.cli.util.donut-project
   "utils for working with a project as a project" 
   (:require
    [babashka.fs :as fs]
    [babashka.process :as ps]
-   [clojure.edn :as edn]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [rewrite-clj.zip :as rz]))
 
 (def env-path
-  "config/env.edn")
+  "resources/config/env.edn")
 
 (defn project-root-git
   []
@@ -40,7 +40,7 @@
   []
   (-> (env-config-path)
       str
-      slurp
-      edn/read-string
-      :project-name))
-
+      rz/of-file
+      (rz/find-value rz/next ':project-name)
+      rz/right
+      rz/string))

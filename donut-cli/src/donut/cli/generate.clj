@@ -1,10 +1,12 @@
 (ns donut.cli.generate
+  #_:clj-kondo/ignore 
   (:require
    [babashka.cli :as cli]
    [bling.core :as bling]
-   [donut.cli.util.project :as proj]
+   [donut.cli.util.donut-project :as proj]
    [donut.generate :as dg]
-   [donut.generators :as dgg]))
+   [donut.generators :as dgg] ;; required for multimethod
+   ))
 
 (defn info
   [{:keys [event-id point]}]
@@ -49,9 +51,4 @@
       (if (or (:help opts) (:h opts))
         (print-help cli-spec)
         (generate opts)))
-    (print-help cli-spec))
-  (dg/generate ::dgg/entity-scaffold
-               {:top         'donut-template-test/test-app
-                :entity-name 'user}
-               {:handle-info  info
-                :handle-error dg/handle-error-log}))
+    (print-help cli-spec)))
