@@ -7,7 +7,7 @@
    [clojure.string :as str]))
 
 (def env-path
-  "/config/env.edn")
+  "config/env.edn")
 
 (defn project-root-git
   []

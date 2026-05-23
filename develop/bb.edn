@@ -1,8 +1,10 @@
-{:paths ["src"]
+{:paths ["src" "../donut-cli/src"]
  :tasks {bump-version {:doc  "Bumps CLI version"
                        :task donut.cli.develop.bump-version/-main}
          publish      {:doc  "Bumps version, pushes tag, kicking off release"
                        :task donut.cli.develop.publish/-main}
+         copy-local   {:doc  "Copies local files to libexec for trying out"
+                       :task donut.cli.develop.copy-local/-main}
          update-deps  {:doc  "update the deps for the CLI"
                        :task donut.cli.develop.update-deps/-main}
          update-brew  {:doc  "update brew formula"
