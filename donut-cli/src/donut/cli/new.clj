@@ -17,8 +17,6 @@
    :name       {:alias :n
                 :desc  "project name in group-name/artifact-name format"}})
 
-(def args->opts [:name])
-
 (def cli-spec
   {:spec       cli-opts
    :args->opts [:name]})
@@ -33,7 +31,7 @@
 (defn print-help
   [spec]
   (println "creates a new Donut single-page app")
-  (println "example: donut my-co/my-project")
+  (println "example: donut new my-co/my-project")
   (println (cli/format-opts (merge spec {:order (vec (keys (:spec spec)))}))))
 
 (defn -main
