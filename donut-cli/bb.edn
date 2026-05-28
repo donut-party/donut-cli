@@ -1,8 +1,8 @@
 {:paths ["src" "resources"]
- :tasks {g        {:doc  "alias for generate"
+ :tasks {generate {:doc  "generate code"
                    :task donut.cli.generate/-main}
-         generate {:doc  "generate code"
-                   :task donut.cli.generate/-main}
+         migrate  {:doc  "manage migrations"
+                   :task donut.cli.migrate/-main}
          new      {:doc  "create a new Donut single-page app"
                    :task donut.cli.new/-main}
          version  {:doc              "print the CLI version"
