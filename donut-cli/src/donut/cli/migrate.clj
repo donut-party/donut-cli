@@ -12,7 +12,9 @@
 
 (defn- single-arg-handler [task opt-key]
   (fn [{:keys [opts]}]
-    (migrate task (get opts opt-key))))
+    (if-let [v (get opts opt-key)]
+      (migrate task v)
+      (println (str "Usage: donut migrate " task " <" (name opt-key) ">")))))
 
 (declare dispatch-table)
 
@@ -57,12 +59,16 @@
    {:cmds ["up"]
     :desc "Run specific migrations up by id"
     :fn   (fn [{:keys [rest-args]}]
-            (apply migrate "up" rest-args))}
+            (if (seq rest-args)
+              (apply migrate "up" rest-args)
+              (println "Usage: donut migrate up <id> [id ...]")))}
 
    {:cmds ["down"]
     :desc "Run specific migrations down by id"
     :fn   (fn [{:keys [rest-args]}]
-            (apply migrate "down" rest-args))}
+            (if (seq rest-args)
+              (apply migrate "down" rest-args)
+              (println "Usage: donut migrate down <id> [id ...]")))}
 
    {:cmds ["pending-list"]
     :desc "List all pending migrations"
