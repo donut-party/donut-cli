@@ -19,11 +19,14 @@
 (declare dispatch-table)
 
 (defn- print-help [_]
-  (println "Usage: donut migrate <command> [options]")
+  (println "Usage: donut migrate <command> [args]")
   (println "\nCommands:")
-  (doseq [{:keys [cmds desc]} dispatch-table]
+  (doseq [{:keys [cmds args desc]} dispatch-table]
     (when (seq cmds)
-      (println (format "  %-35s %s" (first cmds) (or desc ""))))))
+      (println (format "  %-28s %-16s %s"
+                       (first cmds)
+                       (or args "")
+                       (or desc ""))))))
 
 (def dispatch-table
   [{:cmds ["init"]
@@ -31,6 +34,7 @@
     :fn   (no-args-handler "init")}
 
    {:cmds       ["create"]
+    :args       "<name>"
     :desc       "Create a new migration file"
     :spec       {:name {:desc   "Name for the new migration"
                         :coerce :string}}
@@ -50,6 +54,7 @@
     :fn   (no-args-handler "reset")}
 
    {:cmds       ["rollback-until-just-after"]
+    :args       "<id>"
     :desc       "Rollback migrations until just after the given migration id"
     :spec       {:id {:desc   "Migration id"
                       :coerce :long}}
@@ -57,6 +62,7 @@
     :fn         (single-arg-handler "rollback-until-just-after" :id)}
 
    {:cmds ["up"]
+    :args "<id> [id ...]"
     :desc "Run specific migrations up by id"
     :fn   (fn [{:keys [rest-args]}]
             (if (seq rest-args)
@@ -64,6 +70,7 @@
               (println "Usage: donut migrate up <id> [id ...]")))}
 
    {:cmds ["down"]
+    :args "<id> [id ...]"
     :desc "Run specific migrations down by id"
     :fn   (fn [{:keys [rest-args]}]
             (if (seq rest-args)
@@ -75,6 +82,7 @@
     :fn   (no-args-handler "pending-list")}
 
    {:cmds       ["migrate-until-just-before"]
+    :args       "<id>"
     :desc       "Run migrations until just before the given migration id"
     :spec       {:id {:desc   "Migration id"
                       :coerce :long}}
