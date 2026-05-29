@@ -1,18 +1,18 @@
 (ns donut.cli.migrate
   (:require
    [babashka.cli :as cli]
-   [babashka.process :as proc]))
+   [babashka.process :as ps]))
 
-(defn- run!
+(defn- migrate
   [& args]
-  (apply proc/shell "clj" "-M:migrate" (map str args)))
+  (apply ps/shell "clj" "-M:migrate" (map str args)))
 
 (defn- no-args-handler [task]
-  (fn [_] (run! task)))
+  (fn [_] (migrate task)))
 
 (defn- single-arg-handler [task opt-key]
   (fn [{:keys [opts]}]
-    (run! task (get opts opt-key))))
+    (migrate task (get opts opt-key))))
 
 (declare dispatch-table)
 
@@ -28,12 +28,12 @@
     :desc "Initialize the database for migrations"
     :fn   (no-args-handler "init")}
 
-   {:cmds    ["create"]
-    :desc    "Create a new migration file"
-    :spec    {:name {:desc   "Name for the new migration"
-                     :coerce :string}}
+   {:cmds       ["create"]
+    :desc       "Create a new migration file"
+    :spec       {:name {:desc   "Name for the new migration"
+                        :coerce :string}}
     :args->opts [:name]
-    :fn     (single-arg-handler "create" :name)}
+    :fn         (single-arg-handler "create" :name)}
 
    {:cmds ["migrate"]
     :desc "Run all pending migrations"
@@ -57,12 +57,12 @@
    {:cmds ["up"]
     :desc "Run specific migrations up by id"
     :fn   (fn [{:keys [rest-args]}]
-            (apply run! "up" rest-args))}
+            (apply migrate "up" rest-args))}
 
    {:cmds ["down"]
     :desc "Run specific migrations down by id"
     :fn   (fn [{:keys [rest-args]}]
-            (apply run! "down" rest-args))}
+            (apply migrate "down" rest-args))}
 
    {:cmds ["pending-list"]
     :desc "List all pending migrations"
