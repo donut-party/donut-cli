@@ -27,8 +27,8 @@
 
 (defn project-root
   []
-  (if-let [project-root (or (project-root-git)
-                            (project-root-config))]
+  (if-let [project-root (or (project-root-config)
+                            (project-root-git))]
     project-root
     (throw (ex-info "Could not find the donut project root from this directory" {}))))
 

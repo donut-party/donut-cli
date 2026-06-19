@@ -1,8 +1,12 @@
 (ns donut.cli.generate
-  #_:clj-kondo/ignore 
+  #_:clj-kondo/ignore
   (:require
    [babashka.cli :as cli]
    [bling.core :as bling]
+   [clojure.edn :as edn]
+   [clojure.java.io :as io]
+   [clojure.string :as str]
+   [donut.cli.deps :as deps]
    [donut.cli.util.donut-project :as proj]
    [donut.generate :as dg]
    [donut.generators :as dgg] ;; required for multimethod
@@ -17,7 +21,9 @@
                          (:description point)))))
 
 (def cli-opts
-  {:generator-name {:alias  :g
+  {:lib            {:alias :l
+                    :desc  "library providing generators, as group/artifact:version (version optional)"}
+   :generator-name {:alias  :g
                     :desc   "name of the generator"
                     :coerce :keyword}
    :entity-name    {:alias  :e
@@ -32,10 +38,48 @@
   [spec]
   (println "generates code for your Donut app")
   (println "example: donut generate entity-scaffold book")
+  (println "example: donut generate --lib party.donut/bakery:0.0.47 :donut.bakery.generators/install")
   (println (cli/format-opts (merge spec {:order (vec (keys (:spec spec)))}))))
 
+(defn parse-lib
+  "Parse a --lib value of the form group/artifact:version (version optional)
+  into a `[lib-symbol version-or-nil]` pair."
+  [lib-str]
+  (let [[lib version] (str/split lib-str #":" 2)]
+    [(symbol lib) version]))
+
+(defn lib-resource-name
+  "Resource path holding a lib's donut config, e.g. party.donut/bakery ->
+  \"donut/party.donut.bakery.edn\"."
+  [lib]
+  (format "donut/%s.%s.edn" (namespace lib) (name lib)))
+
+(defn load-lib-generators
+  "Download `lib-str` (group/artifact:version, version optional), add it to the
+  classpath, then require the generator namespaces it declares in its
+  \"donut/group.artifact.edn\" resource under [:donut :generator-namespaces]."
+  [lib-str]
+  (let [[lib version] (parse-lib lib-str)]
+    (if version
+      (deps/add-dependency lib version)
+      (deps/add-dependency-latest lib))
+    (let [resource-name (lib-resource-name lib)
+          resource      (io/resource resource-name)]
+      (when-not resource
+        (throw (ex-info (str "could not find resource " resource-name " on the classpath")
+                        {:lib lib :resource resource-name})))
+      (println "Generator namespaces"
+               (edn/read-string (slurp resource))
+               (get-in (edn/read-string (slurp resource))
+                       [:donut :generator-namespaces]))
+      (doseq [generator-ns (get-in (edn/read-string (slurp resource))
+                                   [:donut :generator-namespaces])]
+        (require generator-ns)))))
+
 (defn generate
-  [{:keys [generator-name entity-name]}]
+  [{:keys [lib generator-name entity-name]}]
+  (when lib
+    (load-lib-generators lib))
   (let [full-generator-name (keyword (or (namespace generator-name) "donut.generators")
                                      (name generator-name))]
     (dg/generate full-generator-name
