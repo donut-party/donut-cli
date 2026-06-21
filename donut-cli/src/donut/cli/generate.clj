@@ -68,10 +68,6 @@
       (when-not resource
         (throw (ex-info (str "could not find resource " resource-name " on the classpath")
                         {:lib lib :resource resource-name})))
-      (println "Generator namespaces"
-               (edn/read-string (slurp resource))
-               (get-in (edn/read-string (slurp resource))
-                       [:donut :generator-namespaces]))
       (doseq [generator-ns (get-in (edn/read-string (slurp resource))
                                    [:donut :generator-namespaces])]
         (require generator-ns)))))
@@ -81,10 +77,13 @@
   (when lib
     (load-lib-generators lib))
   (let [full-generator-name (keyword (or (namespace generator-name) "donut.generators")
-                                     (name generator-name))]
+                                     (name generator-name))
+        [lib version]       (some-> lib parse-lib)]
     (dg/generate full-generator-name
-                 {:top         (proj/project-name)
-                  :entity-name entity-name}
+                 {:top             (proj/project-name)
+                  :entity-name     entity-name
+                  :gen-lib         lib
+                  :gen-lib-version version}
                  {:handle-info  info
                   :handle-error dg/handle-error-log})))
 
