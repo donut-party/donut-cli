@@ -25,5 +25,7 @@
               z/of-string
               (update-git-sha 'party.donut/single-page-app latest-sha)
               z/root-string))
-    (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generate\"")
-    (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generators\"")))
+    (try (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generate\"")
+         (catch Exception e))
+    (try (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generators\"")
+         (catch Exception e))))
