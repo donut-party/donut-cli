@@ -18,14 +18,14 @@
   []
   (let [proot       (util/project-root)
         latest-sha  (str/trim (:out (ps/sh "gh api repos/donut-party/single-page-app-template/branches/main --jq '.commit.sha'")))
-        deps-edn-path (str (fs/path proot "donut-cli/deps.edn"))]
-    (spit deps-edn-path
-          (-> deps-edn-path
+        bb-edn-path (str (fs/path proot "donut-cli/bb.edn"))]
+    (spit bb-edn-path
+          (-> bb-edn-path
               slurp
               z/of-string
               (update-git-sha 'party.donut/single-page-app latest-sha)
               z/root-string))
-    (try (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generate\"")
+    (try (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generate\" :deps-file bb.edn")
          (catch Exception e))
-    (try (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generators\"")
+    (try (ps/shell {:dir (fs/path proot "donut-cli")} "neil dep upgrade :lib \"party.donut/generators\" :deps-file bb.edn")
          (catch Exception e))))
