@@ -38,7 +38,7 @@
   [spec]
   (println "generates code for your Donut app")
   (println "example: donut generate entity-scaffold book")
-  (println "example: donut generate --lib party.donut/devtools:0.0.47 :donut.devtools.generators/install")
+  (println "example: donut generate --lib party.donut/app-devtools:0.0.47 :donut.app-devtools.generators/install")
   (println (cli/format-opts (merge spec {:order (vec (keys (:spec spec)))}))))
 
 (defn parse-lib
@@ -49,8 +49,8 @@
     [(symbol lib) version]))
 
 (defn lib-resource-name
-  "Resource path holding a lib's donut config, e.g. party.donut/devtools ->
-  \"donut/party.donut.devtools.edn\"."
+  "Resource path holding a lib's donut config, e.g. party.donut/app-devtools ->
+  \"donut/party.donut.app-devtools.edn\"."
   [lib]
   (format "donut/%s.%s.edn" (namespace lib) (name lib)))
 
