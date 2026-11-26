@@ -11,7 +11,7 @@
  :deps  {io.github.clj-kondo/clj-kondo-bb {:git/tag "v2023.01.20" :git/sha "adfc7df"}
          io.github.paintparty/bling       {:mvn/version "0.10.0"}
          io.github.seancorfield/deps-new  {:git/tag "v0.4.13" :git/sha "879c4eb"}
-         party.donut/generate             {:mvn/version "1.0.77"}
-         party.donut/generators           {:mvn/version "0.0.50"}
+         party.donut/generate             {:mvn/version "1.0.81"}
+         party.donut/generators           {:mvn/version "0.0.53"}
          party.donut/single-page-app      {:git/url "https://github.com/donut-party/single-page-app-template"
-                                           :git/sha "0185923da3d33bccbdbcdc3ed0b8261e07f515fe"}}}
+                                           :git/sha "3ec14232fdc4af9ab5bd4e37e3348d0fdb3d7823"}}}
