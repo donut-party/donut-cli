@@ -12,26 +12,26 @@ donut new my-app-name --target-dir dirname --overwrite
 
 ## Development
 
-This repo contains both the CLI and tools for developing the CLI.
+Release tooling for the CLI lives in [dough](https://github.com/donut-party/dough), checked out as a sibling of this repo.
 
 To publish a new release on GitHub:
 
 ``` shell
-./develop/bin/develop publish
+dough cli-publish
 ```
 
 This will:
 
-1. Bump the version number
-2. Update the single-page-app-template dep to the latest SHA on main on GH
-3. Commit and push
+1. Point the CLI at the newest `party.donut/generate` and `party.donut/generators` on Clojars and the latest single-page-app-template SHA on main
+2. Bump the version number
+3. Commit, tag, and push
 
 From there, a GH workflow creates the release.
 
 The CLI is published to homebrew. To update the homebrew formula:
 
 ``` shell
-./develop/bin/develop update-brew
+dough brew-formula
 ```
 
 This updates the donut.rb file in the homebrew-brew repo to reflect the latest
