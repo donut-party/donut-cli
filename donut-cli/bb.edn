@@ -12,6 +12,6 @@
          io.github.paintparty/bling       {:mvn/version "0.10.0"}
          io.github.seancorfield/deps-new  {:git/tag "v0.4.13" :git/sha "879c4eb"}
          party.donut/generate             {:mvn/version "1.0.81"}
-         party.donut/generators           {:mvn/version "0.0.53"}
+         party.donut/generators           {:mvn/version "0.0.54"}
          party.donut/single-page-app      {:git/url "https://github.com/donut-party/single-page-app-template"
-                                           :git/sha "3ec14232fdc4af9ab5bd4e37e3348d0fdb3d7823"}}}
+                                           :git/sha "9c7077fb1b9462e1868d36a02f7870cad8e61c6a"}}}
