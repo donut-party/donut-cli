@@ -14,4 +14,4 @@
          party.donut/generate             {:mvn/version "1.0.81"}
          party.donut/generators           {:mvn/version "0.0.54"}
          party.donut/single-page-app      {:git/url "https://github.com/donut-party/single-page-app-template"
-                                           :git/sha "6f6cf39a926f23d2d8dfadf9a0916cca6c57ddcb"}}}
+                                           :git/sha "b31149636e6529d38ef9e9141af07f2f16dca4de"}}}
